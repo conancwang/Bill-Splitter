@@ -1,8 +1,5 @@
-//input format for numbers
-
-
-
-export const formatCents = function(input){
+//formatting functions
+const formatCents = function(input){
     let numI = Number(input)
     if(Number.isNaN(numI))
         return null;
@@ -13,13 +10,48 @@ export const formatCents = function(input){
     
 }
 
-//input format for strings
-export const formatString = function(input){
+const formatString = function(input){
     let trimString = input.trim();
     
     if(trimString.length == 0)
         return null;
-    return trimString;
+    return trimString.toLowerCase();
 }
+
+
+
+
+let itemList = new Map();
+let splitCostList = new Map();
+
+
+const addItem = function(itemName, price){
+    itemList.set(itemName, {itemPrice: price, sharedBy: [] });
+}
+
+const toggleItem = function(itemName, personSelect){
+    const item  = itemList.get(itemName);
+    if(item.sharedBy.includes(personSelect))
+        item.sharedBy = item.sharedBy.filter((current) => current != personSelect);
+    else{
+        let shared = itemList.get(itemName).sharedBy;
+        return shared.push(personSelect);
+    }
+    
+}
+
+//split function
+const splitCost = function(allItems){
+    for (const [item, value] of allItems){
+        let splitCost = value.itemPrice/value.sharedBy.length;
+        splitCostList.set(item, value.price+= splitCost);
+    }
+}
+
+addItem("Milk", 4.5);
+toggleItem("Milk",3);
+toggleItem("Milk",3 );
+console.dir(itemList);
+
 
 
