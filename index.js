@@ -23,12 +23,21 @@ const formatString = function(input){
 
 let itemList = new Map();
 let splitCostList = new Map();
-
-
+let peopleList = new Map();
+    
+    
+//add items
 const addItem = function(itemName, price){
     itemList.set(itemName, {itemPrice: price, sharedBy: [] });
 }
 
+//remove item
+const removeItem = function(itemToRemove){
+    const item = itemList.get(itemToRemove)
+    itemList.filter((current) => current!=item);
+}
+
+//check/uncheck items
 const toggleItem = function(itemName, personSelect){
     const item  = itemList.get(itemName);
     if(item.sharedBy.includes(personSelect))
@@ -40,13 +49,42 @@ const toggleItem = function(itemName, personSelect){
     
 }
 
-//split function
+//splitting the cost
 const splitCost = function(allItems){
     for (const [item, value] of allItems){
         let splitCost = value.itemPrice/value.sharedBy.length;
         return splitCostList.set(item, value.itemPrice = splitCost);
     }
 }
+
+const getSubTotal = function(itemList){
+    let subTotal = 0;
+    for (const [item, value] of itemList){
+        subTotal += value.itemPrice;
+    }
+    return subTotal;
+}
+
+const setTax = function(taxInput){
+    let taxMultiplier = (taxInput+100)/100;
+    return taxPercent;
+} 
+
+const tip = 0;
+
+const getTotal = function(allItems){
+    let total = 0;
+    for(const [item, value] of allItems){
+        total += value.itemPrice()
+    }
+    return total;
+}
+
+
+
+
+
+
 
 
 
