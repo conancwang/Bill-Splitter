@@ -44,14 +44,19 @@ const toggleItem = function(itemName, personSelect){
 const splitCost = function(allItems){
     for (const [item, value] of allItems){
         let splitCost = value.itemPrice/value.sharedBy.length;
-        splitCostList.set(item, value.price+= splitCost);
+        return splitCostList.set(item, value.itemPrice = splitCost);
     }
 }
 
+
+
 addItem("Milk", 4.5);
 toggleItem("Milk",3);
-toggleItem("Milk",3 );
+toggleItem("Milk",5 );
 console.dir(itemList);
+splitCost(itemList);
+console.log(splitCostList);
+
 
 
 
