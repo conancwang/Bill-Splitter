@@ -33,8 +33,7 @@ const addItem = function(itemName, price){
 
 //remove item
 const removeItem = function(itemToRemove){
-    const item = itemList.get(itemToRemove)
-    itemList.filter((current) => current!=item);
+    itemList.delete(itemToRemove);
 }
 
 //check/uncheck items
@@ -53,10 +52,11 @@ const toggleItem = function(itemName, personSelect){
 const splitCost = function(allItems){
     for (const [item, value] of allItems){
         let splitCost = value.itemPrice/value.sharedBy.length;
-        return splitCostList.set(item, value.itemPrice = splitCost);
+        splitCostList.set(item, splitCost);
     }
+     
 }
-
+//get subtotal
 const getSubTotal = function(itemList){
     let subTotal = 0;
     for (const [item, value] of itemList){
@@ -64,22 +64,24 @@ const getSubTotal = function(itemList){
     }
     return subTotal;
 }
-
-const setTax = function(taxInput){
-    let taxMultiplier = (taxInput+100)/100;
-    return taxPercent;
+//set tax
+const afterTax = function(taxInput){
+    let taxNum = Number(taxInput);
+    let taxMultiplier = (taxNum+100)/100;
+    return taxMultiplier;
 } 
 
 const tip = 0;
-
-const getTotal = function(allItems){
-    let total = 0;
-    for(const [item, value] of allItems){
-        total += value.itemPrice()
-    }
+//get total
+const getTotal = function(allItems, taxPercent, tip){
+    const total = getSubTotal(allItems) * afterTax(taxPercent)+ tip;
     return total;
 }
 
+//add Person
+const setPerson = function(name){
+    peopleList.set(name, splitCost);
+}
 
 
 
